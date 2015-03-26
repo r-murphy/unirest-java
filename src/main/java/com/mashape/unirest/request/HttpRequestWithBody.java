@@ -30,6 +30,8 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.apache.http.client.HttpClient;
+
 import com.mashape.unirest.http.HttpMethod;
 import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.request.body.MultipartBody;
@@ -41,12 +43,17 @@ public class HttpRequestWithBody extends HttpRequest {
 	public HttpRequestWithBody(HttpMethod method, String url) {
 		super(method, url);
 	}
-
+	
 	public HttpRequestWithBody routeParam(String name, String value) {
 		super.routeParam(name, value);
 		return this;
 	}
-
+	
+	@Override
+	public HttpRequestWithBody setHttpClient(HttpClient httpClient) {
+		return (HttpRequestWithBody) super.setHttpClient(httpClient);
+	}
+	
 	@Override
 	public HttpRequestWithBody header(String name, String value) {
 		return (HttpRequestWithBody) super.header(name, value);

@@ -37,13 +37,17 @@ import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.http.client.HttpClient;
+
 import com.mashape.unirest.http.HttpMethod;
 import com.mashape.unirest.http.utils.Base64Coder;
+import com.mashape.unirest.http.utils.ClientFactory;
 import com.mashape.unirest.http.utils.URLParamEncoder;
 import com.mashape.unirest.request.body.Body;
 
 public class HttpRequest extends BaseRequest {
 
+	private HttpClient httpClient;
 	private HttpMethod httpMethod;
 	protected String url;
 	Map<String, List<String>> headers = new TreeMap<String, List<String>>(String.CASE_INSENSITIVE_ORDER);
@@ -53,6 +57,20 @@ public class HttpRequest extends BaseRequest {
 		this.httpMethod = method;
 		this.url = url;
 		super.httpRequest = this;
+	}
+	
+	public HttpRequest setHttpClient(HttpClient httpClient) {
+		this.httpClient = httpClient;
+		return this;
+	}
+	
+	public HttpClient getHttpClient() {
+		if (httpClient!=null) {
+			return httpClient;
+		}
+		else {
+			return ClientFactory.getHttpClient();
+		}
 	}
 	
 	public HttpRequest routeParam(String name, String value) {
